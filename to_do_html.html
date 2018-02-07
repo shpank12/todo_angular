@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+<link href="https://getbootstrap.com/docs/3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<style>
+body { background: #3a6186; /* fallback for old browsers */
+  background: -webkit-linear-gradient(to left, #3a6186 , #89253e); /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to left, #3a6186 , #89253e); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    color : #fff; }
+	
+input[type="checkbox"] {        /* float: left; */
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+    display: inline;
+    margin-top: 0;
+    position: relative;
+    top: 5px;
+}
+	.flex{     display: flex;
+    align-items: center;
+    align-content: center;    height: 100vh;
+    justify-content: center;}
+.main-area{    text-align: center;
+}	
+</style>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+</head>
+<body ng-app="myApp" ng-controller="todoCtrl" class="flex">
+<div class="main-area">
+<h2>Todo List</h2>
+
+<form ng-submit="todoAdd()">
+    <div class="form-group">
+  <input type="text" ng-model="todoInput" size="50" class="form-control" placeholder="Add New"><br/>
+    <input class="btn btn-primary" type="submit" value="Add New">
+	</div>
+</form>
+
+<br>
+<form>
+<div ng-repeat="x in todoList">
+    <input class="form-control" type="checkbox" ng-model="x.done"> <span ng-bind="x.todoText"></span>
+	<br/>
+	<br/>
+
+</div>
+<button class="btn btn-primary" ng-click="remove()">Remove marked</button>
+</form>
+
+<script>
+var app = angular.module('myApp', []); 
+app.controller('todoCtrl', function($scope) {
+    $scope.todoList = [{todoText:'Clean House', done:false}];
+
+    $scope.todoAdd = function() {
+        $scope.todoList.push({todoText:$scope.todoInput, done:false});
+        $scope.todoInput = "";
+    };
+
+    $scope.remove = function() {
+        var oldList = $scope.todoList;
+        $scope.todoList = [];
+        angular.forEach(oldList, function(x) {
+            if (!x.done) $scope.todoList.push(x);
+        });
+    };
+});
+</script>
+</div>
+</body>
+</html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://getbootstrap.com/docs/3.3/dist/js/bootstrap.min.js"></script>
+
